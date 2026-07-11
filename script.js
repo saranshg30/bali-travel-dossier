@@ -4,6 +4,18 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentData = null;
     let isBudgetMode = false;
 
+    // --- NAVBAR SCROLL EFFECT ---
+    const navbar = document.querySelector('.navbar');
+    if (navbar) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    }
+
     // --- PORTAL LOGIC ---
     const portalScreen = document.getElementById('portal-screen');
     const mainApp = document.getElementById('main-app');

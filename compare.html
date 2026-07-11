@@ -3,295 +3,887 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expedition Comparison Matrix</title>
-    <meta name="description" content="Compare the Bali and Sri Lanka Expeditions">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Expedition Comparison Matrix — Bali vs Sri Lanka</title>
+    <meta name="description" content="A definitive side-by-side comparison of the Bali and Sri Lanka expeditions — costs, scenery, activities, and our verdict.">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
+        /* ===== ANIMATED GRADIENT HERO ===== */
         .comparison-hero {
-            background: linear-gradient(to bottom, rgba(13, 59, 46, 0.8), rgba(13, 59, 46, 0.9)), url('https://images.unsplash.com/photo-1488085061387-422e29b40080?auto=format&fit=crop&w=1920&q=80') center/cover;
-            padding: 100px 5%;
+            position: relative;
+            min-height: 55vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            padding: 6rem 5% 8rem;
+            background: linear-gradient(-45deg, #0d3b2e, #145a44, #0a2e23, #1a6b52, #0d3b2e);
+            background-size: 400% 400%;
+            animation: heroGradient 12s ease infinite;
+            overflow: hidden;
             color: white;
         }
 
-        .matrix-container {
-            max-width: 1200px;
-            margin: -50px auto 4rem auto;
-            position: relative;
+        @keyframes heroGradient {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating orbs */
+        .comparison-hero::before,
+        .comparison-hero::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            pointer-events: none;
+        }
+        .comparison-hero::before {
+            width: 500px; height: 500px;
+            background: var(--secondary-color);
+            top: -150px; right: -100px;
+            animation: floatOrb 8s ease-in-out infinite alternate;
+        }
+        .comparison-hero::after {
+            width: 400px; height: 400px;
+            background: #88d4ab;
+            bottom: -100px; left: -80px;
+            animation: floatOrb 10s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes floatOrb {
+            0%   { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, -30px) scale(1.15); }
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 0.5rem 1.4rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--secondary-color);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .comparison-hero h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .comparison-hero h1 span {
+            background: linear-gradient(135deg, var(--secondary-color), #f5d76e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: rgba(255, 255, 255, 0.75);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        /* Back nav */
+        .back-nav {
+            position: absolute;
+            top: 2rem;
+            left: 5%;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
             z-index: 10;
-            padding: 0 5%;
+        }
+        .back-nav:hover {
+            background: rgba(255,255,255,0.15);
+            color: var(--secondary-color);
+            border-color: rgba(212,175,55,0.3);
+            transform: translateX(-3px);
+        }
+
+        /* ===== WAVE DIVIDER ===== */
+        .wave-divider {
+            position: relative;
+            margin-top: -1px;
+            overflow: hidden;
+            line-height: 0;
+        }
+        .wave-divider svg {
+            display: block;
+            width: 100%;
+            height: 80px;
+        }
+
+        /* ===== STAGGERED FADE-IN ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== MATRIX CONTAINER ===== */
+        .matrix-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 4rem 5%;
+            position: relative;
         }
 
         .matrix-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
+            gap: 2.5rem;
         }
 
+        /* ===== GLASSMORPHIC COLUMN CARDS ===== */
         .matrix-col {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 24px;
             overflow: hidden;
-            transition: transform 0.3s ease;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.08),
+                0 4px 20px rgba(0, 0, 0, 0.04),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        box-shadow 0.4s ease;
         }
-
         .matrix-col:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.12),
+                0 8px 30px rgba(0, 0, 0, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
         }
 
+        /* Column header hero image */
         .col-header {
             position: relative;
-            height: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            height: 320px;
+            overflow: hidden;
         }
-
-        .col-header.bali { background: url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80') center/cover; }
-        .col-header.lanka { background: url('https://images.unsplash.com/photo-1588614959060-4d144f28b207?auto=format&fit=crop&w=800&q=80') center/cover; }
-
+        .col-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .matrix-col:hover .col-header img {
+            transform: scale(1.05);
+        }
         .col-header-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0,0,0,0.4);
+            background: linear-gradient(
+                to top,
+                rgba(13, 59, 46, 0.85) 0%,
+                rgba(13, 59, 46, 0.3) 50%,
+                rgba(0, 0, 0, 0.15) 100%
+            );
         }
-
         .col-header-content {
-            position: relative;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
             z-index: 1;
-            text-align: center;
         }
-
         .col-header-content h2 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.75rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
-
         .date-badges {
             display: flex;
-            gap: 0.5rem;
-            justify-content: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
         }
-
         .date-badge {
-            background: var(--secondary-color);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: rgba(212, 175, 55, 0.9);
             color: var(--primary-color);
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
+            padding: 0.35rem 0.9rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
             font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .date-badge svg {
+            width: 14px; height: 14px;
+            fill: var(--primary-color);
         }
 
+        /* Column body */
         .matrix-body {
-            padding: 2rem;
+            padding: 2rem 2rem 2.5rem;
         }
 
         .matrix-row {
             margin-bottom: 2rem;
             padding-bottom: 2rem;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
         }
-
         .matrix-row:last-child {
             border-bottom: none;
             margin-bottom: 0;
             padding-bottom: 0;
         }
 
+        /* Row title with icon */
         .row-title {
+            font-family: var(--font-heading);
             color: var(--primary-color);
-            font-size: 1.2rem;
+            font-size: 1.15rem;
+            font-weight: 600;
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.6rem;
+        }
+        .row-title .icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--primary-color), #1a6b52);
+            color: white;
+            font-size: 0.9rem;
+            flex-shrink: 0;
         }
 
+        /* Cost boxes */
         .cost-box {
-            background: var(--body-bg);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1rem 1.2rem;
+            border-radius: 12px;
+            margin-bottom: 0.6rem;
+            transition: transform 0.2s ease;
+        }
+        .cost-box:hover {
+            transform: translateX(4px);
+        }
+        .cost-box.premium {
+            background: linear-gradient(135deg, rgba(13, 59, 46, 0.06), rgba(13, 59, 46, 0.02));
+            border: 1px solid rgba(13, 59, 46, 0.08);
+        }
+        .cost-box.budget {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.02));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+        .cost-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #666;
+        }
+        .cost-label small {
+            display: block;
+            font-size: 0.75rem;
+            color: #999;
+            margin-top: 2px;
+        }
+        .cost-value {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--primary-color);
+        }
+        .cost-box.budget .cost-value {
+            color: #b8941e;
         }
 
-        .cost-box .label { font-weight: 600; color: #555; }
-        .cost-box .value { font-weight: 700; color: var(--secondary-color); font-size: 1.1rem; }
+        /* Scenery text */
+        .scenery-text {
+            color: #555;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
 
-        ul.matrix-list {
+        /* Activity list */
+        .activity-list {
             list-style: none;
-        }
-
-        ul.matrix-list li {
-            padding-left: 1.5rem;
-            position: relative;
-            margin-bottom: 0.5rem;
-            color: #444;
-        }
-
-        ul.matrix-list li::before {
-            content: '•';
-            color: var(--secondary-color);
-            position: absolute;
-            left: 0;
-            font-size: 1.5rem;
-            line-height: 1;
-            top: -2px;
-        }
-
-        .pro-item::before { content: '✓' !important; color: #2e7d32 !important; font-size: 1.2rem !important; top: 2px !important; }
-        .con-item::before { content: '⚠' !important; color: #c62828 !important; font-size: 1.2rem !important; top: 2px !important; }
-
-        .back-nav {
-            position: absolute;
-            top: 2rem;
-            left: 5%;
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
             display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .activity-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+            padding: 0.7rem 1rem;
+            background: rgba(243, 240, 231, 0.5);
+            border-radius: 10px;
+            font-size: 0.92rem;
+            color: #444;
+            transition: all 0.25s ease;
+            border: 1px solid transparent;
+        }
+        .activity-list li:hover {
+            background: rgba(243, 240, 231, 0.9);
+            border-color: rgba(212, 175, 55, 0.2);
+            transform: translateX(4px);
+        }
+        .activity-list .bullet {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px; height: 24px;
+            border-radius: 50%;
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            font-size: 0.7rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* Pros & Cons */
+        .pros-cons-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .pc-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.65rem;
+            padding: 0.65rem 0;
+            font-size: 0.92rem;
+            color: #444;
+            line-height: 1.5;
+        }
+        .pc-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            font-size: 0.85rem;
+            margin-top: 1px;
+        }
+        .pc-icon.pro {
+            background: rgba(46, 125, 50, 0.1);
+            color: #2e7d32;
+        }
+        .pc-icon.con {
+            background: rgba(198, 40, 40, 0.1);
+            color: #c62828;
+        }
+
+        /* ===== QUICK VERDICT ===== */
+        .verdict-section {
+            padding: 0 5% 5rem;
+        }
+        .verdict-card {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            background: rgba(13, 59, 46, 0.92);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3.5rem;
+            color: white;
+            overflow: hidden;
+            box-shadow:
+                0 30px 80px rgba(13, 59, 46, 0.35),
+                0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+        }
+        .verdict-card::before {
+            content: '';
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 300px; height: 300px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.08);
+            filter: blur(60px);
+            pointer-events: none;
+        }
+        .verdict-card::after {
+            content: '';
+            position: absolute;
+            bottom: -60px; left: -60px;
+            width: 250px; height: 250px;
+            border-radius: 50%;
+            background: rgba(136, 212, 171, 0.06);
+            filter: blur(50px);
+            pointer-events: none;
+        }
+        .verdict-eyebrow {
+            display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            transition: color 0.3s ease;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+        .verdict-card h2 {
+            font-family: var(--font-heading);
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+        .verdict-card h2 span {
+            color: var(--secondary-color);
+        }
+        .verdict-body {
+            position: relative;
+            z-index: 1;
+        }
+        .verdict-text {
+            color: rgba(255,255,255,0.8);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        .verdict-highlights {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .verdict-highlight {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        .verdict-highlight:hover {
+            background: rgba(255,255,255,0.12);
+            transform: translateY(-2px);
+        }
+        .verdict-highlight .vh-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--secondary-color);
+            margin-bottom: 0.4rem;
+        }
+        .verdict-highlight .vh-value {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 600;
         }
 
-        .back-nav:hover { color: var(--secondary-color); }
+        /* ===== FOOTER ===== */
+        .compare-footer {
+            background: var(--primary-color);
+            text-align: center;
+            padding: 2.5rem 5%;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+        .compare-footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            margin-left: 1rem;
+        }
+        .compare-footer a:hover {
+            color: #f5d76e;
+        }
 
-        @media (max-width: 768px) {
-            .matrix-grid { grid-template-columns: 1fr; }
+        /* ===== VS BADGE (center of grid) ===== */
+        .vs-badge-container {
+            display: none; /* hidden by default, shown in desktop via grid trick */
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .matrix-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .comparison-hero {
+                min-height: 45vh;
+                padding: 5rem 5% 6rem;
+            }
+            .verdict-highlights {
+                grid-template-columns: 1fr;
+            }
+            .verdict-card {
+                padding: 2.5rem 2rem;
+            }
+            .col-header {
+                height: 260px;
+            }
+            .back-nav {
+                top: 1.2rem;
+                left: 4%;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .col-header {
+                height: 220px;
+            }
+            .col-header-content h2 {
+                font-size: 1.7rem;
+            }
+            .matrix-body {
+                padding: 1.5rem;
+            }
+        }
+
+        /* ===== WAVE DIVIDER BOTTOM ===== */
+        .wave-divider-bottom {
+            position: relative;
+            margin-bottom: -1px;
+            overflow: hidden;
+            line-height: 0;
+            background: var(--body-bg);
+        }
+        .wave-divider-bottom svg {
+            display: block;
+            width: 100%;
+            height: 60px;
         }
     </style>
 </head>
 <body>
 
+    <!-- ===== HERO HEADER ===== -->
     <header class="comparison-hero">
-        <a href="index.html" class="back-nav">← Back to Portal</a>
-        <h1 class="title fade-in-up" style="font-size: 3rem;">Expedition Comparison Matrix</h1>
-        <p class="subtitle fade-in-up" style="animation-delay: 0.2s">A definitive side-by-side evaluation to help your family decide.</p>
+        <a href="index.html" class="back-nav" id="back-to-portal">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+            Back to Portal
+        </a>
+
+        <div class="hero-eyebrow reveal">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/></svg>
+            Expedition Intelligence
+        </div>
+
+        <h1 class="reveal">Expedition <span>Comparison Matrix</span></h1>
+        <p class="hero-subtitle reveal">A curated, data-driven evaluation to help your family choose the perfect October getaway — weighing cost, experience, and vibe.</p>
     </header>
 
-    <div class="matrix-container fade-in-up" style="animation-delay: 0.4s">
+    <!-- ===== WAVE DIVIDER ===== -->
+    <div class="wave-divider">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#faf9f5" d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,50 1440,40 L1440,80 L0,80 Z"/>
+        </svg>
+    </div>
+
+    <!-- ===== COMPARISON GRID ===== -->
+    <main class="matrix-container">
         <div class="matrix-grid">
-            
-            <!-- BALI COLUMN -->
-            <div class="matrix-col">
-                <div class="col-header bali">
+
+            <!-- ====== BALI COLUMN ====== -->
+            <div class="matrix-col reveal" id="bali-column">
+                <div class="col-header">
+                    <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=80" alt="Bali rice terraces and temples at sunset" loading="lazy">
                     <div class="col-header-overlay"></div>
                     <div class="col-header-content">
                         <h2>Bali Retreat</h2>
                         <div class="date-badges">
-                            <span class="date-badge">Oct 2 - 7</span>
-                            <span class="date-badge">Oct 15 - 20</span>
+                            <span class="date-badge">
+                                <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z"/></svg>
+                                Oct 2 – 7
+                            </span>
+                            <span class="date-badge">
+                                <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z"/></svg>
+                                Oct 15 – 20
+                            </span>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="matrix-body">
+                    <!-- Cost -->
                     <div class="matrix-row">
-                        <h3 class="row-title">Estimated Per Pax Cost</h3>
-                        <div class="cost-box">
-                            <span class="label">Premium (5-Star + SQ Flights)</span>
-                            <span class="value">~₹1.48L</span>
+                        <h3 class="row-title">
+                            <span class="icon">💰</span>
+                            Estimated Cost Per Pax
+                        </h3>
+                        <div class="cost-box premium">
+                            <div class="cost-label">Premium Tier<small>5-Star + SQ Flights</small></div>
+                            <div class="cost-value">~₹1.48L</div>
                         </div>
-                        <div class="cost-box">
-                            <span class="label">Budget (4-Star + AirAsia)</span>
-                            <span class="value">~₹93,000</span>
+                        <div class="cost-box budget">
+                            <div class="cost-label">Budget Tier<small>4-Star + AirAsia</small></div>
+                            <div class="cost-value">~₹93,000</div>
                         </div>
                     </div>
 
+                    <!-- Scenery -->
                     <div class="matrix-row">
-                        <h3 class="row-title">Scenery & Vibe</h3>
-                        <p style="color: #444; line-height: 1.6;">Lush tropical jungles, volcanic beaches, and deeply spiritual Hindu culture. The vibe is highly relaxing, focused on luxury resorts, beach clubs, and serene temples.</p>
+                        <h3 class="row-title">
+                            <span class="icon">🌿</span>
+                            Scenery &amp; Vibe
+                        </h3>
+                        <p class="scenery-text">Lush tropical jungles, dramatic volcanic beaches, and deeply spiritual Hindu culture. The vibe is centred on <strong>luxury resorts, beach clubs, and serene temples</strong> — an effortlessly relaxing experience drenched in natural beauty.</p>
                     </div>
 
+                    <!-- Activities -->
                     <div class="matrix-row">
-                        <h3 class="row-title">Core Activities</h3>
-                        <ul class="matrix-list">
-                            <li>Glass-bottom Catamaran Tour</li>
-                            <li>Uluwatu Sunset Kecak Fire Dance</li>
-                            <li>Tegalalang Rice Terraces Walk</li>
-                            <li>Waterbom Bali Waterpark (Lazy River)</li>
+                        <h3 class="row-title">
+                            <span class="icon">🎯</span>
+                            Core Activities
+                        </h3>
+                        <ul class="activity-list">
+                            <li><span class="bullet">1</span> Glass-bottom Catamaran Tour</li>
+                            <li><span class="bullet">2</span> Uluwatu Sunset Kecak Fire Dance</li>
+                            <li><span class="bullet">3</span> Tegalalang Rice Terraces Walk</li>
+                            <li><span class="bullet">4</span> Waterbom Bali Waterpark (Lazy River)</li>
                         </ul>
                     </div>
 
+                    <!-- Pros & Cons -->
                     <div class="matrix-row">
-                        <h3 class="row-title">Pros & Cons</h3>
-                        <ul class="matrix-list">
-                            <li class="pro-item">World-class, large-scale luxury resorts perfect for large groups.</li>
-                            <li class="pro-item">Better dedicated entertainment for kids (like Waterbom Bali).</li>
-                            <li class="con-item">Longer travel time from Jaipur (~12-14 hours with layover).</li>
-                            <li class="con-item">Higher overall budget compared to Sri Lanka.</li>
-                        </ul>
+                        <h3 class="row-title">
+                            <span class="icon">⚖️</span>
+                            Pros &amp; Cons
+                        </h3>
+                        <div class="pros-cons-grid">
+                            <div class="pc-item">
+                                <span class="pc-icon pro">✓</span>
+                                <span>World-class, large-scale luxury resorts — perfect for extended family groups.</span>
+                            </div>
+                            <div class="pc-item">
+                                <span class="pc-icon pro">✓</span>
+                                <span>Better dedicated entertainment for kids (Waterbom Bali waterpark).</span>
+                            </div>
+                            <div class="pc-item">
+                                <span class="pc-icon con">⚠</span>
+                                <span>Longer travel time from Jaipur (~12-14 hours with layover).</span>
+                            </div>
+                            <div class="pc-item">
+                                <span class="pc-icon con">⚠</span>
+                                <span>Higher overall budget compared to Sri Lanka.</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- SRI LANKA COLUMN -->
-            <div class="matrix-col">
-                <div class="col-header lanka">
+            <!-- ====== SRI LANKA COLUMN ====== -->
+            <div class="matrix-col reveal" id="lanka-column">
+                <div class="col-header">
+                    <img src="https://images.unsplash.com/photo-1588614959060-4d144f28b207?auto=format&fit=crop&w=900&q=80" alt="Sri Lanka Galle Fort coastline" loading="lazy">
                     <div class="col-header-overlay"></div>
                     <div class="col-header-content">
                         <h2>Sri Lanka Heritage</h2>
                         <div class="date-badges">
-                            <span class="date-badge">Oct 2 - 7</span>
-                            <span class="date-badge">Oct 15 - 20</span>
+                            <span class="date-badge">
+                                <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z"/></svg>
+                                Oct 2 – 7
+                            </span>
+                            <span class="date-badge">
+                                <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z"/></svg>
+                                Oct 15 – 20
+                            </span>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="matrix-body">
+                    <!-- Cost -->
                     <div class="matrix-row">
-                        <h3 class="row-title">Estimated Per Pax Cost</h3>
-                        <div class="cost-box">
-                            <span class="label">Premium (5-Star + AI Flights)</span>
-                            <span class="value">~₹1.33L</span>
+                        <h3 class="row-title">
+                            <span class="icon">💰</span>
+                            Estimated Cost Per Pax
+                        </h3>
+                        <div class="cost-box premium">
+                            <div class="cost-label">Premium Tier<small>5-Star + AI Flights</small></div>
+                            <div class="cost-value">~₹1.33L</div>
                         </div>
-                        <div class="cost-box">
-                            <span class="label">Budget (4-Star + IndiGo)</span>
-                            <span class="value">~₹71,000</span>
+                        <div class="cost-box budget">
+                            <div class="cost-label">Budget Tier<small>4-Star + IndiGo</small></div>
+                            <div class="cost-value">~₹71,000</div>
                         </div>
                     </div>
 
+                    <!-- Scenery -->
                     <div class="matrix-row">
-                        <h3 class="row-title">Scenery & Vibe</h3>
-                        <p style="color: #444; line-height: 1.6;">Colonial Dutch architecture, expansive Indian Ocean coastlines, and lush mangroves. The vibe is historical, culturally immersive, and extremely laid back.</p>
+                        <h3 class="row-title">
+                            <span class="icon">🌿</span>
+                            Scenery &amp; Vibe
+                        </h3>
+                        <p class="scenery-text">Colonial Dutch architecture, expansive Indian Ocean coastlines, and lush mangrove ecosystems. The vibe is <strong>historical, culturally immersive, and extremely laid back</strong> — a journey that feels intimate and authentic.</p>
                     </div>
 
+                    <!-- Activities -->
                     <div class="matrix-row">
-                        <h3 class="row-title">Core Activities</h3>
-                        <ul class="matrix-list">
-                            <li>Bentota Coastline Relaxation</li>
-                            <li>Madu River Mangrove Safari</li>
-                            <li>Galle Dutch Fort Heritage Walk</li>
-                            <li>Colombo City Tour & Shopping</li>
+                        <h3 class="row-title">
+                            <span class="icon">🎯</span>
+                            Core Activities
+                        </h3>
+                        <ul class="activity-list">
+                            <li><span class="bullet">1</span> Bentota Coastline Relaxation</li>
+                            <li><span class="bullet">2</span> Madu River Mangrove Safari</li>
+                            <li><span class="bullet">3</span> Galle Dutch Fort Heritage Walk</li>
+                            <li><span class="bullet">4</span> Colombo City Tour &amp; Shopping</li>
                         </ul>
                     </div>
 
+                    <!-- Pros & Cons -->
                     <div class="matrix-row">
-                        <h3 class="row-title">Pros & Cons</h3>
-                        <ul class="matrix-list">
-                            <li class="pro-item">Significantly cheaper, especially in the budget tier.</li>
-                            <li class="pro-item">Shorter travel time from India (8-10 hours with a quick layover).</li>
-                            <li class="con-item">Less "mega-resort" infrastructure compared to Bali.</li>
-                            <li class="con-item">Activities are more historical/nature-based rather than theme parks.</li>
-                        </ul>
+                        <h3 class="row-title">
+                            <span class="icon">⚖️</span>
+                            Pros &amp; Cons
+                        </h3>
+                        <div class="pros-cons-grid">
+                            <div class="pc-item">
+                                <span class="pc-icon pro">✓</span>
+                                <span>Significantly cheaper — up to ₹22,000 saved per person on budget tier.</span>
+                            </div>
+                            <div class="pc-item">
+                                <span class="pc-icon pro">✓</span>
+                                <span>Shorter travel time from India (8-10 hours with a quick layover).</span>
+                            </div>
+                            <div class="pc-item">
+                                <span class="pc-icon con">⚠</span>
+                                <span>Less "mega-resort" infrastructure compared to Bali.</span>
+                            </div>
+                            <div class="pc-item">
+                                <span class="pc-icon con">⚠</span>
+                                <span>Activities skew more historical &amp; nature-based rather than theme parks.</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
         </div>
+    </main>
+
+    <!-- ===== WAVE DIVIDER ===== -->
+    <div class="wave-divider-bottom">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#0d3b2e" d="M0,0 C480,60 960,0 1440,40 L1440,60 L0,60 Z" opacity="0.08"/>
+            <path fill="#0d3b2e" d="M0,20 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" opacity="0.05"/>
+        </svg>
     </div>
 
-    <footer style="background: var(--primary-color); color: white; text-align: center; padding: 2rem;">
-        <p>&copy; 2026 Custom Family Expeditions. <a href="index.html" style="color: var(--secondary-color); text-decoration: none; margin-left: 1rem;">Return to Portal</a></p>
+    <!-- ===== QUICK VERDICT ===== -->
+    <section class="verdict-section">
+        <div class="verdict-card reveal" id="verdict-card">
+            <div class="verdict-body">
+                <div class="verdict-eyebrow">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    Quick Verdict
+                </div>
+                <h2>Both Are Exceptional — <span>Your Priority Decides</span></h2>
+                <p class="verdict-text">
+                    If your family values <strong>luxury infrastructure, kid-friendly attractions, and a resort-driven holiday</strong>, Bali is the clear winner — it's built for groups seeking premium indulgence. However, if the priority is <strong>budget-friendliness, shorter travel, and an authentic cultural immersion</strong>, Sri Lanka offers remarkable value at nearly ₹22K less per person in the budget tier.
+                </p>
+                <p class="verdict-text">
+                    For a large family group with children, <strong>Bali edges ahead</strong> on sheer entertainment breadth. For a more intimate, cost-conscious trip, <strong>Sri Lanka is the smarter pick</strong>.
+                </p>
+                <div class="verdict-highlights">
+                    <div class="verdict-highlight">
+                        <div class="vh-label">Best for Luxury &amp; Kids</div>
+                        <div class="vh-value">🏝️ Bali Retreat</div>
+                    </div>
+                    <div class="verdict-highlight">
+                        <div class="vh-label">Best for Budget &amp; Culture</div>
+                        <div class="vh-value">🇱🇰 Sri Lanka Heritage</div>
+                    </div>
+                    <div class="verdict-highlight">
+                        <div class="vh-label">Budget Savings (Per Pax)</div>
+                        <div class="vh-value">₹22,000 with Sri Lanka</div>
+                    </div>
+                    <div class="verdict-highlight">
+                        <div class="vh-label">Travel Time Advantage</div>
+                        <div class="vh-value">4+ hrs shorter to Sri Lanka</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="compare-footer">
+        <p>&copy; 2026 Custom Family Expeditions. <a href="index.html" id="footer-portal-link">Return to Portal →</a></p>
     </footer>
+
+    <!-- ===== SCROLL REVEAL SCRIPT ===== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            let delay = 0;
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        // Stagger each element's appearance
+                        const el = entry.target;
+                        const stagger = el.dataset.delay || 0;
+                        setTimeout(() => {
+                            el.classList.add('visible');
+                        }, stagger);
+                        observer.unobserve(el);
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: '0px 0px -40px 0px'
+            });
+
+            reveals.forEach((el, i) => {
+                // Auto-assign stagger delays
+                el.dataset.delay = i * 120;
+                observer.observe(el);
+            });
+        });
+    </script>
 
 </body>
 </html>
