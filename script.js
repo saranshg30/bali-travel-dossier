@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Global State
     let currentData = null;
+    let isBudgetMode = false;
 
     // --- PORTAL LOGIC ---
     const portalScreen = document.getElementById('portal-screen');
@@ -12,6 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
     portalCards.forEach(card => {
         card.addEventListener('click', () => {
             const expId = card.getAttribute('data-expedition');
+            // Reset budget mode on new selection
+            isBudgetMode = false;
+            document.getElementById('tier-toggle').checked = false;
+            updateTierLabels();
+
             loadExpedition(expId);
             
             // Transition
@@ -72,54 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         });
 
-        // 4. Render Aviation
-        const avGrid = document.getElementById('aviation-grid');
-        avGrid.innerHTML = '';
-        currentData.aviation.forEach(av => {
-            let lis = av.features.map(f => `<li>${f}</li>`).join('');
-            avGrid.innerHTML += `
-                <div class="aviation-card">
-                    <h3>${av.title}</h3>
-                    <p>${av.desc}</p>
-                    <ul>${lis}</ul>
-                </div>
-            `;
-        });
-
-        // 5. Render Accommodations & Culinary Flip Cards
-        const renderFlipCards = (data, containerId, hasLink) => {
-            const container = document.getElementById(containerId);
-            container.innerHTML = '';
-            data.forEach(item => {
-                let linkHtml = hasLink ? `<a href="${item.link}" target="_blank" class="official-btn">Official Website</a>` : '';
-                let priceHtml = item.price ? `<h4>${item.price}</h4>` : '';
-                // Fallback image handling
-                let imgFallback = "this.src='https://images.unsplash.com/photo-1542259009477-d625272157b7?auto=format&fit=crop&w=800&q=80'";
-                container.innerHTML += `
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <img src="${item.image}" alt="${item.title}" onerror="${imgFallback}">
-                                <div class="content">
-                                    <h3>${item.title}</h3>
-                                    <p style="margin-top:0.5rem; color:#666;">${item.desc}</p>
-                                    <p style="margin-top:1rem; font-weight:600; color:var(--secondary-color); font-size:0.9rem;">Hover for details ↻</p>
-                                </div>
-                            </div>
-                            <div class="flip-card-back">
-                                <h3 style="margin-bottom:1rem; color:white;">${item.title}</h3>
-                                <p>${item.fullDesc}</p>
-                                ${priceHtml}
-                                ${linkHtml}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-        };
-        renderFlipCards(currentData.accommodations, 'accommodation-grid', true);
-        renderFlipCards(currentData.culinary, 'culinary-grid', false);
-
         // 6. Render Dynamic Itinerary Accordion
         const accContainer = document.getElementById('itinerary-accordion');
         const itineraryBg = document.getElementById('itinerary-bg');
@@ -171,7 +129,9 @@ document.addEventListener('DOMContentLoaded', () => {
             headers[0].click();
         }
 
-        // 7. Interactive Budget Calculator Initialization
+        renderTogglableSections();
+
+        // Interactive Budget Calculator Initialization
         const slider = document.getElementById('guest-slider');
         slider.value = 12; // reset
         calculateBudget(12);
@@ -187,15 +147,95 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 100);
     };
 
-    // Budget Calculator global binding
+    const renderTogglableSections = () => {
+        if(!currentData) return;
+
+        // Render Aviation
+        const avGrid = document.getElementById('aviation-grid');
+        avGrid.innerHTML = '';
+        const aviationData = isBudgetMode ? currentData.budgetAviation : currentData.aviation;
+        
+        aviationData.forEach(av => {
+            let lis = av.features.map(f => `<li>${f}</li>`).join('');
+            avGrid.innerHTML += `
+                <div class="aviation-card">
+                    <h3>${av.title}</h3>
+                    <p>${av.desc}</p>
+                    <ul>${lis}</ul>
+                </div>
+            `;
+        });
+
+        // Render Accommodations & Culinary Flip Cards
+        const renderFlipCards = (data, containerId, hasLink) => {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            data.forEach(item => {
+                let linkHtml = hasLink ? `<a href="${item.link}" target="_blank" class="official-btn">Official Website</a>` : '';
+                let priceHtml = item.price ? `<h4>${item.price}</h4>` : '';
+                let imgFallback = "this.src='https://images.unsplash.com/photo-1542259009477-d625272157b7?auto=format&fit=crop&w=800&q=80'";
+                container.innerHTML += `
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <img src="${item.image}" alt="${item.title}" onerror="${imgFallback}">
+                                <div class="content">
+                                    <h3>${item.title}</h3>
+                                    <p style="margin-top:0.5rem; color:#666;">${item.desc}</p>
+                                    <p style="margin-top:1rem; font-weight:600; color:var(--secondary-color); font-size:0.9rem;">Hover for details ↻</p>
+                                </div>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3 style="margin-bottom:1rem; color:white;">${item.title}</h3>
+                                <p>${item.fullDesc}</p>
+                                ${priceHtml}
+                                ${linkHtml}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        };
+        const accData = isBudgetMode ? currentData.budgetAccommodations : currentData.accommodations;
+        renderFlipCards(accData, 'accommodation-grid', true);
+        
+        // Culinary is always premium (Jain requirements)
+        renderFlipCards(currentData.culinary, 'culinary-grid', false);
+    };
+
+    // --- TIER TOGGLE LOGIC ---
+    const tierToggle = document.getElementById('tier-toggle');
+    const labels = document.querySelectorAll('.tier-label');
+    
+    const updateTierLabels = () => {
+        if(isBudgetMode) {
+            labels[0].classList.remove('premium-active');
+            labels[1].classList.add('budget-active');
+        } else {
+            labels[0].classList.add('premium-active');
+            labels[1].classList.remove('budget-active');
+        }
+    };
+
+    tierToggle.addEventListener('change', (e) => {
+        isBudgetMode = e.target.checked;
+        updateTierLabels();
+        renderTogglableSections();
+        calculateBudget(parseInt(document.getElementById('guest-slider').value));
+    });
+
+    // --- BUDGET CALCULATOR ---
     const slider = document.getElementById('guest-slider');
     const display = document.getElementById('guest-count-display');
     const statsContainer = document.getElementById('budget-stats');
     
     const calculateBudget = (guests) => {
         if(!currentData) return;
-        const flightCost = currentData.budget.flightPerPax * guests;
-        const totalCost = currentData.budget.baseCost * guests;
+        
+        const budgetParams = isBudgetMode ? currentData.budget.budget : currentData.budget.premium;
+        
+        const flightCost = budgetParams.flightPerPax * guests;
+        const totalCost = budgetParams.baseCost * guests;
         
         statsContainer.innerHTML = `
             <div class="stat-box">

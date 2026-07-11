@@ -138,9 +138,18 @@
             <!-- Budget -->
             <section id="budget" class="section animate-on-scroll">
                 <h2 class="section-title">Interactive Financial Planner</h2>
-                <p class="section-desc">Adjust the number of guests to instantly calculate the total projected outlay for the family.</p>
+                <p class="section-desc">Adjust the number of guests and tier to instantly calculate the total projected outlay for the family.</p>
                 
                 <div class="budget-panel glass-panel">
+                    <div class="tier-toggle-container">
+                        <span class="tier-label premium-active">Premium (5-Star)</span>
+                        <label class="switch">
+                            <input type="checkbox" id="tier-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="tier-label">Cost-Effective (3/4-Star)</span>
+                    </div>
+
                     <div class="slider-container">
                         <label for="guest-slider">Number of Guests: <span id="guest-count-display">12</span></label>
                         <input type="range" id="guest-slider" min="12" max="16" step="1" value="12">
