@@ -133,54 +133,62 @@ h1, h2, h3, h4 {
 
 
 /* ====================================================================
-   1. PORTAL SCREEN — Breathtaking Entry
+   1. PORTAL SCREEN & HERO — Breathtaking Animated Gradient
    ==================================================================== */
+#portal-screen, .hero {
+    position: relative;
+    overflow: hidden;
+    color: var(--text-light);
+    
+    /* 5-Stop Animated Gradient (from compare.html) */
+    background: linear-gradient(-45deg, #0d3b2e, #145a44, #0a2e23, #1a6b52, #0d3b2e);
+    background-size: 400% 400%;
+    animation: heroGradient 12s ease infinite;
+}
+
 #portal-screen {
     min-height: 100vh;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 3rem 2rem;
-    color: var(--text-light);
-    position: relative;
-    overflow: hidden;
-
-    /* Animated gradient background */
-    background: linear-gradient(
-        135deg,
-        var(--primary-dark) 0%,
-        var(--primary) 25%,
-        #0f4a38 50%,
-        var(--primary-dark) 75%,
-        #06201a 100%
-    );
-    background-size: 400% 400%;
-    animation: portalGradient 12s ease infinite;
 }
 
-/* Floating particle-like radial gradients */
-#portal-screen::before {
+/* Floating Orbs for Portal & Hero */
+#portal-screen::before, #portal-screen::after,
+.hero::before, .hero::after {
     content: '';
     position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.06) 0%, transparent 50%),
-        radial-gradient(circle at 50% 10%, rgba(255, 255, 255, 0.03) 0%, transparent 40%);
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
     pointer-events: none;
-    animation: portalShimmer 8s ease-in-out infinite alternate;
 }
 
-@keyframes portalGradient {
-    0%, 100% { background-position: 0% 50%; }
-    25% { background-position: 100% 0%; }
-    50% { background-position: 100% 100%; }
-    75% { background-position: 0% 100%; }
+#portal-screen::before, .hero::before {
+    width: 500px; height: 500px;
+    background: var(--secondary);
+    top: -150px; right: -100px;
+    animation: floatOrb 8s ease-in-out infinite alternate;
 }
 
-@keyframes portalShimmer {
-    0% { opacity: 0.5; transform: scale(1); }
-    100% { opacity: 1; transform: scale(1.05); }
+#portal-screen::after, .hero::after {
+    width: 400px; height: 400px;
+    background: #88d4ab;
+    bottom: -100px; left: -80px;
+    animation: floatOrb 10s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes heroGradient {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes floatOrb {
+    0%   { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(40px, -30px) scale(1.15); }
 }
 
 .portal-title {
@@ -397,55 +405,38 @@ h1, h2, h3, h4 {
 
 
 /* ====================================================================
-   3. HERO — Ken Burns + Glass Dashboard Mini-Cards
+   3. HERO — Glass Dashboard Mini-Cards
    ==================================================================== */
 .hero {
-    position: relative;
-    height: 100vh;
-    background-size: cover;
-    background-position: center;
+    min-height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
     padding-top: 60px;
-    overflow: hidden;
-}
-
-/* Ken Burns zoom animation on the background */
-.hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: inherit;
-    background-size: cover;
-    background-position: center;
-    animation: kenBurns 20s ease-in-out infinite alternate;
-    z-index: -1;
-}
-
-@keyframes kenBurns {
-    0% {
-        transform: scale(1) translateX(0);
-    }
-    50% {
-        transform: scale(1.08) translateX(-1%);
-    }
-    100% {
-        transform: scale(1.12) translateY(-2%);
-    }
+    padding-bottom: 80px; /* Space for wave */
 }
 
 .hero-overlay {
+    display: none; /* No longer needed with gradient background */
+}
+
+/* Wave Divider */
+.wave-divider {
     position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        160deg,
-        rgba(13, 59, 46, 0.7) 0%,
-        rgba(8, 40, 32, 0.8) 50%,
-        rgba(0, 0, 0, 0.75) 100%
-    );
-    z-index: 0;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    z-index: 10;
+}
+
+.wave-divider svg {
+    display: block;
+    width: 100%;
+    height: 80px;
 }
 
 .hero-content {
