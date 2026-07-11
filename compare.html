@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expedition Comparison Matrix</title>
+    <meta name="description" content="Compare the Bali and Sri Lanka Expeditions">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .comparison-hero {
+            background: linear-gradient(to bottom, rgba(13, 59, 46, 0.8), rgba(13, 59, 46, 0.9)), url('https://images.unsplash.com/photo-1488085061387-422e29b40080?auto=format&fit=crop&w=1920&q=80') center/cover;
+            padding: 100px 5%;
+            text-align: center;
+            color: white;
+        }
+
+        .matrix-container {
+            max-width: 1200px;
+            margin: -50px auto 4rem auto;
+            position: relative;
+            z-index: 10;
+            padding: 0 5%;
+        }
+
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .matrix-col {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .matrix-col:hover {
+            transform: translateY(-5px);
+        }
+
+        .col-header {
+            position: relative;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .col-header.bali { background: url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80') center/cover; }
+        .col-header.lanka { background: url('https://images.unsplash.com/photo-1588614959060-4d144f28b207?auto=format&fit=crop&w=800&q=80') center/cover; }
+
+        .col-header-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+        }
+
+        .col-header-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .col-header-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .date-badges {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .date-badge {
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .matrix-body {
+            padding: 2rem;
+        }
+
+        .matrix-row {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .matrix-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .row-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cost-box {
+            background: var(--body-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cost-box .label { font-weight: 600; color: #555; }
+        .cost-box .value { font-weight: 700; color: var(--secondary-color); font-size: 1.1rem; }
+
+        ul.matrix-list {
+            list-style: none;
+        }
+
+        ul.matrix-list li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+            color: #444;
+        }
+
+        ul.matrix-list li::before {
+            content: '•';
+            color: var(--secondary-color);
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+            line-height: 1;
+            top: -2px;
+        }
+
+        .pro-item::before { content: '✓' !important; color: #2e7d32 !important; font-size: 1.2rem !important; top: 2px !important; }
+        .con-item::before { content: '⚠' !important; color: #c62828 !important; font-size: 1.2rem !important; top: 2px !important; }
+
+        .back-nav {
+            position: absolute;
+            top: 2rem;
+            left: 5%;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-nav:hover { color: var(--secondary-color); }
+
+        @media (max-width: 768px) {
+            .matrix-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="comparison-hero">
+        <a href="index.html" class="back-nav">← Back to Portal</a>
+        <h1 class="title fade-in-up" style="font-size: 3rem;">Expedition Comparison Matrix</h1>
+        <p class="subtitle fade-in-up" style="animation-delay: 0.2s">A definitive side-by-side evaluation to help your family decide.</p>
+    </header>
+
+    <div class="matrix-container fade-in-up" style="animation-delay: 0.4s">
+        <div class="matrix-grid">
+            
+            <!-- BALI COLUMN -->
+            <div class="matrix-col">
+                <div class="col-header bali">
+                    <div class="col-header-overlay"></div>
+                    <div class="col-header-content">
+                        <h2>Bali Retreat</h2>
+                        <div class="date-badges">
+                            <span class="date-badge">Oct 2 - 7</span>
+                            <span class="date-badge">Oct 15 - 20</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="matrix-body">
+                    <div class="matrix-row">
+                        <h3 class="row-title">Estimated Per Pax Cost</h3>
+                        <div class="cost-box">
+                            <span class="label">Premium (5-Star + SQ Flights)</span>
+                            <span class="value">~₹1.48L</span>
+                        </div>
+                        <div class="cost-box">
+                            <span class="label">Budget (4-Star + AirAsia)</span>
+                            <span class="value">~₹93,000</span>
+                        </div>
+                    </div>
+
+                    <div class="matrix-row">
+                        <h3 class="row-title">Scenery & Vibe</h3>
+                        <p style="color: #444; line-height: 1.6;">Lush tropical jungles, volcanic beaches, and deeply spiritual Hindu culture. The vibe is highly relaxing, focused on luxury resorts, beach clubs, and serene temples.</p>
+                    </div>
+
+                    <div class="matrix-row">
+                        <h3 class="row-title">Core Activities</h3>
+                        <ul class="matrix-list">
+                            <li>Glass-bottom Catamaran Tour</li>
+                            <li>Uluwatu Sunset Kecak Fire Dance</li>
+                            <li>Tegalalang Rice Terraces Walk</li>
+                            <li>Waterbom Bali Waterpark (Lazy River)</li>
+                        </ul>
+                    </div>
+
+                    <div class="matrix-row">
+                        <h3 class="row-title">Pros & Cons</h3>
+                        <ul class="matrix-list">
+                            <li class="pro-item">World-class, large-scale luxury resorts perfect for large groups.</li>
+                            <li class="pro-item">Better dedicated entertainment for kids (like Waterbom Bali).</li>
+                            <li class="con-item">Longer travel time from Jaipur (~12-14 hours with layover).</li>
+                            <li class="con-item">Higher overall budget compared to Sri Lanka.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SRI LANKA COLUMN -->
+            <div class="matrix-col">
+                <div class="col-header lanka">
+                    <div class="col-header-overlay"></div>
+                    <div class="col-header-content">
+                        <h2>Sri Lanka Heritage</h2>
+                        <div class="date-badges">
+                            <span class="date-badge">Oct 2 - 7</span>
+                            <span class="date-badge">Oct 15 - 20</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="matrix-body">
+                    <div class="matrix-row">
+                        <h3 class="row-title">Estimated Per Pax Cost</h3>
+                        <div class="cost-box">
+                            <span class="label">Premium (5-Star + AI Flights)</span>
+                            <span class="value">~₹1.33L</span>
+                        </div>
+                        <div class="cost-box">
+                            <span class="label">Budget (4-Star + IndiGo)</span>
+                            <span class="value">~₹71,000</span>
+                        </div>
+                    </div>
+
+                    <div class="matrix-row">
+                        <h3 class="row-title">Scenery & Vibe</h3>
+                        <p style="color: #444; line-height: 1.6;">Colonial Dutch architecture, expansive Indian Ocean coastlines, and lush mangroves. The vibe is historical, culturally immersive, and extremely laid back.</p>
+                    </div>
+
+                    <div class="matrix-row">
+                        <h3 class="row-title">Core Activities</h3>
+                        <ul class="matrix-list">
+                            <li>Bentota Coastline Relaxation</li>
+                            <li>Madu River Mangrove Safari</li>
+                            <li>Galle Dutch Fort Heritage Walk</li>
+                            <li>Colombo City Tour & Shopping</li>
+                        </ul>
+                    </div>
+
+                    <div class="matrix-row">
+                        <h3 class="row-title">Pros & Cons</h3>
+                        <ul class="matrix-list">
+                            <li class="pro-item">Significantly cheaper, especially in the budget tier.</li>
+                            <li class="pro-item">Shorter travel time from India (8-10 hours with a quick layover).</li>
+                            <li class="con-item">Less "mega-resort" infrastructure compared to Bali.</li>
+                            <li class="con-item">Activities are more historical/nature-based rather than theme parks.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer style="background: var(--primary-color); color: white; text-align: center; padding: 2rem;">
+        <p>&copy; 2026 Custom Family Expeditions. <a href="index.html" style="color: var(--secondary-color); text-decoration: none; margin-left: 1rem;">Return to Portal</a></p>
+    </footer>
+
+</body>
+</html>
