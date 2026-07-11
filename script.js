@@ -140,36 +140,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // Render Accommodations
     const accGrid = document.getElementById('accommodation-grid');
     accommodations.forEach(acc => {
-        accGrid.innerHTML += \`
+        accGrid.innerHTML += `
             <div class="card">
-                <img src="\${acc.image}" alt="\${acc.title}" class="card-img">
+                <img src="${acc.image}" alt="${acc.title}" class="card-img">
                 <div class="card-content">
-                    <h3 class="card-title">\${acc.title}</h3>
-                    <p>\${acc.desc}</p>
-                    <p style="margin-top: 1rem; font-weight: 600; color: var(--secondary-color);">\${acc.price}</p>
-                    <a href="\${acc.link}" target="_blank" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background: var(--primary-color); color: white; text-decoration: none; border-radius: 4px; font-weight: 500; font-size: 0.9rem;">Official Website</a>
+                    <h3 class="card-title">${acc.title}</h3>
+                    <p>${acc.desc}</p>
+                    <p style="margin-top: 1rem; font-weight: 600; color: var(--secondary-color);">${acc.price}</p>
+                    <a href="${acc.link}" target="_blank" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background: var(--primary-color); color: white; text-decoration: none; border-radius: 4px; font-weight: 500; font-size: 0.9rem;">Official Website</a>
                 </div>
             </div>
-        \`;
+        `;
     });
 
     // Render Itinerary Accordion
     const accContainer = document.getElementById('itinerary-accordion');
     itinerary.forEach((day, index) => {
-        accContainer.innerHTML += \`
+        accContainer.innerHTML += `
             <div class="accordion-item">
                 <div class="accordion-header">
-                    <span>\${day.day}</span>
+                    <span>${day.day}</span>
                     <span>+</span>
                 </div>
                 <div class="accordion-content">
                     <div class="accordion-body">
-                        <img src="\${day.image}" alt="Day \${index + 1}" class="itinerary-image">
-                        \${day.content}
+                        <img src="${day.image}" alt="Day ${index + 1}" class="itinerary-image">
+                        ${day.content}
                     </div>
                 </div>
             </div>
-        \`;
+        `;
     });
 
     // Accordion Logic
