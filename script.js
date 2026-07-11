@@ -157,11 +157,13 @@ document.addEventListener('DOMContentLoaded', () => {
         
         aviationData.forEach(av => {
             let lis = av.features.map(f => `<li>${f}</li>`).join('');
+            let linkHtml = av.link ? `<a href="${av.link}" target="_blank" class="official-btn" style="margin-top: 1rem; display: inline-block;">Check Flights & Book</a>` : '';
             avGrid.innerHTML += `
                 <div class="aviation-card">
                     <h3>${av.title}</h3>
                     <p>${av.desc}</p>
                     <ul>${lis}</ul>
+                    ${linkHtml}
                 </div>
             `;
         });
@@ -171,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const container = document.getElementById(containerId);
             container.innerHTML = '';
             data.forEach(item => {
-                let linkHtml = hasLink ? `<a href="${item.link}" target="_blank" class="official-btn">Official Website</a>` : '';
+                let linkHtml = hasLink ? `<a href="${item.link}" target="_blank" class="official-btn" style="margin-top: 1rem;">Official Website / Book</a>` : '';
                 let priceHtml = item.price ? `<h4>${item.price}</h4>` : '';
                 let imgFallback = "this.src='https://images.unsplash.com/photo-1542259009477-d625272157b7?auto=format&fit=crop&w=800&q=80'";
                 container.innerHTML += `
@@ -182,6 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <div class="content">
                                     <h3>${item.title}</h3>
                                     <p style="margin-top:0.5rem; color:#666;">${item.desc}</p>
+                                    ${linkHtml}
                                     <p style="margin-top:1rem; font-weight:600; color:var(--secondary-color); font-size:0.9rem;">Hover for details ↻</p>
                                 </div>
                             </div>
@@ -189,7 +192,6 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <h3 style="margin-bottom:1rem; color:white;">${item.title}</h3>
                                 <p>${item.fullDesc}</p>
                                 ${priceHtml}
-                                ${linkHtml}
                             </div>
                         </div>
                     </div>
@@ -205,24 +207,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- TIER TOGGLE LOGIC ---
     const tierToggle = document.getElementById('tier-toggle');
+    const tierToggleTop = document.getElementById('tier-toggle-top');
     const labels = document.querySelectorAll('.tier-label');
     
     const updateTierLabels = () => {
         if(isBudgetMode) {
-            labels[0].classList.remove('premium-active');
-            labels[1].classList.add('budget-active');
+            labels[0].classList.remove('premium-active'); // top premium
+            labels[1].classList.add('budget-active');    // top budget
+            labels[2].classList.remove('premium-active'); // bottom premium
+            labels[3].classList.add('budget-active');    // bottom budget
         } else {
             labels[0].classList.add('premium-active');
             labels[1].classList.remove('budget-active');
+            labels[2].classList.add('premium-active');
+            labels[3].classList.remove('budget-active');
         }
     };
 
-    tierToggle.addEventListener('change', (e) => {
-        isBudgetMode = e.target.checked;
+    const handleToggle = (checked) => {
+        isBudgetMode = checked;
+        tierToggle.checked = checked;
+        if(tierToggleTop) tierToggleTop.checked = checked;
+        
         updateTierLabels();
         renderTogglableSections();
         calculateBudget(parseInt(document.getElementById('guest-slider').value));
+    };
+
+    tierToggle.addEventListener('change', (e) => {
+        handleToggle(e.target.checked);
     });
+
+    if(tierToggleTop) {
+        tierToggleTop.addEventListener('change', (e) => {
+            handleToggle(e.target.checked);
+        });
+    }
 
     // --- BUDGET CALCULATOR ---
     const slider = document.getElementById('guest-slider');

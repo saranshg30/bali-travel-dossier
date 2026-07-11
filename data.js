@@ -21,7 +21,8 @@ const EXPEDITION_DATA = {
             {
                 title: "Singapore Airlines (SQ)",
                 desc: "Premium comfort via DEL to DPS.",
-                features: ["Transit: Changi Airport (SIN)", "Baggage: 30kg Checked", "Dietary: AVML & VJML", "Pitch: 32-inch comfort"]
+                features: ["Transit: Changi Airport (SIN)", "Baggage: 30kg Checked", "Dietary: AVML & VJML", "Pitch: 32-inch comfort"],
+                link: "https://www.singaporeair.com/"
             },
             {
                 title: "Ground Transportation",
@@ -33,7 +34,8 @@ const EXPEDITION_DATA = {
             {
                 title: "AirAsia / IndiGo (Connecting)",
                 desc: "Cost-effective routing via KUL or BKK.",
-                features: ["Transit: Kuala Lumpur / Bangkok", "Baggage: 20kg Pre-purchased", "Dietary: Pre-booked Veg Meals", "Pitch: Standard 28-inch"]
+                features: ["Transit: Kuala Lumpur / Bangkok", "Baggage: 20kg Pre-purchased", "Dietary: Pre-booked Veg Meals", "Pitch: Standard 28-inch"],
+                link: "https://www.skyscanner.co.in/transport/flights/jai/dps/"
             },
             {
                 title: "Ground Transportation",
@@ -119,12 +121,12 @@ const EXPEDITION_DATA = {
         dashboard: { origin: "Jaipur, India", dest: "Bali (DPS)", baseCity: "Nusa Dua", dates: "Oct 15 – Oct 20, 2026", cohort: "12–16 Guests", travelTime: "12-14 Hrs", transport: "Private Coach", meals: "Strict Jain/Veg" },
         budget: { premium: { baseCost: 105000, flightPerPax: 49000 }, budget: { baseCost: 68000, flightPerPax: 29000 } },
         aviation: [
-            { title: "Singapore Airlines (SQ)", desc: "Premium comfort via DEL to DPS.", features: ["Transit: Changi Airport (SIN)", "Baggage: 30kg Checked", "Dietary: AVML & VJML", "Pitch: 32-inch comfort"] },
-            { title: "Ground Transportation", desc: "Private 25-seater Executive Coach.", features: ["Vehicle: Isuzu Elf Coach", "Storage: Dedicated cooler", "Access: Direct temple drop-offs"] }
+            { title: "Singapore Airlines (SQ)", desc: "Premium comfort via DEL to DPS.", features: ["Transit: Changi Airport (SIN)", "Baggage: 30kg Checked", "Dietary: AVML & VJML", "Pitch: 32-inch comfort"], link: "https://www.singaporeair.com/" },
+            { title: "Ground Transportation", desc: "Private 25-seater Executive Coach.", features: ["Vehicle: Isuzu Elf Coach", "Storage: Dedicated cooler", "Access: Direct temple drop-offs"], link: "#" }
         ],
         budgetAviation: [
-            { title: "AirAsia / IndiGo (Connecting)", desc: "Cost-effective routing via KUL or BKK.", features: ["Transit: Kuala Lumpur / Bangkok", "Baggage: 20kg Pre-purchased", "Dietary: Pre-booked Veg Meals", "Pitch: Standard 28-inch"] },
-            { title: "Ground Transportation", desc: "Standard 15-Seater Minivans.", features: ["Vehicle: 2x Toyota Hiace", "Storage: Standard trunk", "Access: Standard drop-offs"] }
+            { title: "AirAsia / IndiGo (Connecting)", desc: "Cost-effective routing via KUL or BKK.", features: ["Transit: Kuala Lumpur / Bangkok", "Baggage: 20kg Pre-purchased", "Dietary: Pre-booked Veg Meals", "Pitch: Standard 28-inch"], link: "https://www.skyscanner.co.in/transport/flights/jai/dps/" },
+            { title: "Ground Transportation", desc: "Standard 15-Seater Minivans.", features: ["Vehicle: 2x Toyota Hiace", "Storage: Standard trunk", "Access: Standard drop-offs"], link: "#" }
         ],
         accommodations: [
             { title: "Grand Hyatt Bali", desc: "Pristine white sands in Nusa Dua.", fullDesc: "Features cascading waterfalls, 5 pools.", price: "₹18,500 / night", image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=80", link: "https://www.hyatt.com/" },
@@ -154,11 +156,11 @@ const EXPEDITION_DATA = {
         dashboard: { origin: "Jaipur, India", dest: "Colombo (CMB)", baseCity: "Bentota / Galle", dates: "Oct 2 – Oct 7, 2026", cohort: "12–16 Guests", travelTime: "8-10 Hrs", transport: "Private AC Coach", meals: "Strict Jain/Veg" },
         budget: { premium: { baseCost: 95000, flightPerPax: 38000 }, budget: { baseCost: 55000, flightPerPax: 16000 } },
         aviation: [
-            { title: "Air India (AI) / SriLankan", desc: "Fastest routing from JAI to CMB via New Delhi.", features: ["Transit: Delhi (DEL) - 2h transit", "Baggage: 30kg Checked", "Dietary: Hindu Veg & Jain (VJML)", "Pitch: Standard Economy/Business"] },
+            { title: "Air India (AI) / SriLankan", desc: "Fastest routing from JAI to CMB via New Delhi.", features: ["Transit: Delhi (DEL) - 2h transit", "Baggage: 30kg Checked", "Dietary: Hindu Veg & Jain (VJML)", "Pitch: Standard Economy/Business"], link: "https://www.airindia.com/" },
             { title: "Ground Transportation", desc: "Private AC Coach via the Southern Expressway.", features: ["Vehicle: Premium 20-Seater Coach", "Storage: Ample luggage space", "Driver: Expert local navigator"] }
         ],
         budgetAviation: [
-            { title: "IndiGo Airlines", desc: "Cost-effective routing via Chennai or Delhi.", features: ["Transit: Chennai / Delhi", "Baggage: 15kg included", "Dietary: Buy-on-board Veg", "Pitch: 28-inch standard"] },
+            { title: "IndiGo Airlines", desc: "Cost-effective routing via Chennai or Delhi.", features: ["Transit: Chennai / Delhi", "Baggage: 15kg included", "Dietary: Buy-on-board Veg", "Pitch: 28-inch standard"], link: "https://www.goindigo.in/" },
             { title: "Ground Transportation", desc: "Standard 15-Seater Minivans.", features: ["Vehicle: Dual AC Minivans", "Storage: Standard trunk", "Access: Standard drop-offs"] }
         ],
         accommodations: [
@@ -189,11 +191,11 @@ const EXPEDITION_DATA = {
         dashboard: { origin: "Jaipur, India", dest: "Colombo (CMB)", baseCity: "Bentota / Galle", dates: "Oct 15 – Oct 20, 2026", cohort: "12–16 Guests", travelTime: "8-10 Hrs", transport: "Private AC Coach", meals: "Strict Jain/Veg" },
         budget: { premium: { baseCost: 98000, flightPerPax: 39000 }, budget: { baseCost: 57000, flightPerPax: 17000 } },
         aviation: [
-            { title: "Air India (AI) / SriLankan", desc: "Fastest routing from JAI to CMB via New Delhi.", features: ["Transit: Delhi (DEL) - 2h transit", "Baggage: 30kg Checked", "Dietary: Hindu Veg & Jain (VJML)", "Pitch: Standard Economy/Business"] },
+            { title: "Air India (AI) / SriLankan", desc: "Fastest routing from JAI to CMB via New Delhi.", features: ["Transit: Delhi (DEL) - 2h transit", "Baggage: 30kg Checked", "Dietary: Hindu Veg & Jain (VJML)", "Pitch: Standard Economy/Business"], link: "https://www.airindia.com/" },
             { title: "Ground Transportation", desc: "Private AC Coach via the Southern Expressway.", features: ["Vehicle: Premium 20-Seater Coach", "Storage: Ample luggage space", "Driver: Expert local navigator"] }
         ],
         budgetAviation: [
-            { title: "IndiGo Airlines", desc: "Cost-effective routing via Chennai or Delhi.", features: ["Transit: Chennai / Delhi", "Baggage: 15kg included", "Dietary: Buy-on-board Veg", "Pitch: 28-inch standard"] },
+            { title: "IndiGo Airlines", desc: "Cost-effective routing via Chennai or Delhi.", features: ["Transit: Chennai / Delhi", "Baggage: 15kg included", "Dietary: Buy-on-board Veg", "Pitch: 28-inch standard"], link: "https://www.goindigo.in/" },
             { title: "Ground Transportation", desc: "Standard 15-Seater Minivans.", features: ["Vehicle: Dual AC Minivans", "Storage: Standard trunk", "Access: Standard drop-offs"] }
         ],
         accommodations: [
