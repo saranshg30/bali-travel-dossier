@@ -856,7 +856,6 @@ h1, h2, h3, h4 {
 .flip-card-front {
     background: #ffffff;
     color: var(--text-dark);
-    position: relative;
 }
 
 /* Shimmer sweep on hover */

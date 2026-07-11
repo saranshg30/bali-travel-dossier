@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                     <h3>${item.title}</h3>
                                     <p style="margin-top:0.5rem; color:#666;">${item.desc}</p>
                                     ${linkHtml}
-                                    <p style="margin-top:1rem; font-weight:600; color:var(--secondary-color); font-size:0.9rem;">Hover for details ↻</p>
+                                    <p style="margin-top:1rem; font-weight:600; color:var(--secondary); font-size:0.9rem;">Hover for details ↻</p>
                                 </div>
                             </div>
                             <div class="flip-card-back">
