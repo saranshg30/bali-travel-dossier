@@ -28,6 +28,84 @@ body {
     overflow-x: hidden;
 }
 
+/* Visibility toggles */
+.hidden { display: none !important; }
+.portal-active { display: flex; }
+.app-active { display: block; }
+
+/* PORTAL SCREEN */
+#portal-screen {
+    min-height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-color);
+    padding: 2rem;
+    color: var(--text-light);
+}
+
+.portal-title {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.portal-subtitle {
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+.portal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.portal-card {
+    position: relative;
+    height: 350px;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.portal-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.portal-card:hover {
+    transform: translateY(-15px);
+}
+
+.portal-card:hover img {
+    transform: scale(1.1);
+}
+
+.portal-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2));
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+}
+
+.portal-overlay h2 {
+    font-size: 2rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+}
+
 /* Typography */
 h1, h2, h3, h4 {
     font-family: var(--font-heading);
@@ -96,7 +174,9 @@ h1, h2, h3, h4 {
 .hero {
     position: relative;
     height: 100vh;
-    background: url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover fixed;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -213,32 +293,67 @@ h1, h2, h3, h4 {
     box-shadow: 0 20px 40px rgba(0,0,0,0.08);
 }
 
-/* Snapshot Table */
-.snapshot-table-container {
-    overflow-x: auto;
+/* Vertical Timeline Quick Snapshot */
+.snapshot-timeline-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
 }
 
-.snapshot-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
+.snapshot-timeline-container::before {
+    content: '';
+    position: absolute;
+    left: 30px;
+    top: 20px;
+    bottom: 20px;
+    width: 2px;
+    background: var(--secondary-color);
+    z-index: 0;
 }
 
-.snapshot-table th {
-    background-color: var(--primary-color);
-    color: var(--text-light);
-    padding: 1rem;
-    font-family: var(--font-heading);
+.timeline-day-card {
+    position: relative;
+    margin-left: 60px;
+    z-index: 1;
 }
 
-.snapshot-table td {
-    padding: 1rem;
-    border-bottom: 1px solid #eee;
-    transition: background-color 0.2s ease;
+.timeline-day-card::before {
+    content: '';
+    position: absolute;
+    left: -39px;
+    top: 28px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    border: 3px solid var(--secondary-color);
 }
 
-.snapshot-table tr:hover td {
-    background-color: var(--accent-color);
+.timeline-day-title {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 0.5rem;
+}
+
+.timeline-details {
+    list-style: none;
+    line-height: 2;
+}
+
+.timeline-details li {
+    font-size: 1rem;
+    color: #444;
+}
+
+.timeline-details strong {
+    color: var(--text-dark);
+    display: inline-block;
+    width: 120px;
 }
 
 /* Aviation Grid */
@@ -278,7 +393,7 @@ h1, h2, h3, h4 {
 }
 
 /* 3D Flip Cards */
-.card-grid {
+.card-grid, .culinary-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2rem;
@@ -311,7 +426,7 @@ h1, h2, h3, h4 {
     position: absolute;
     width: 100%;
     height: 100%;
-    -webkit-backface-visibility: hidden; /* Safari */
+    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     border-radius: 16px;
     overflow: hidden;
@@ -464,14 +579,6 @@ h1, h2, h3, h4 {
     flex-wrap: wrap;
 }
 
-/* Culinary Section */
-.culinary-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    perspective: 1000px;
-}
-
 /* Interactive Budget */
 .slider-container {
     margin-bottom: 3rem;
@@ -594,4 +701,5 @@ footer {
     .title { font-size: 2.5rem; }
     .nav-links { display: none; }
     .budget-stats { flex-direction: column; }
+    .portal-title { font-size: 2.5rem; }
 }
